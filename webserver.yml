@@ -1,0 +1,20 @@
+- hosts: localhost
+  tasks:
+          - name: "Install web server"
+            package:
+                    name: httpd
+                    state: present
+
+
+          - name: "copying files for webpages"
+            copy:
+                    src: index.html
+                    dest: /var/www/html/index.html
+                    
+            notify: "Web Pages has been Changed So Restarting services."
+  handlers:
+          
+          - name: "Web Pages has been Changed So Restarting services."
+            service:
+                    name: httpd
+                    state: restarted
